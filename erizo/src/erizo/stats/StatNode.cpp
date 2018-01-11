@@ -215,14 +215,6 @@ uint64_t MovingIntervalRateStat::calculateRateForInterval(uint64_t interval_to_c
   return (rate * 1000 * scale_);
 }
 
-uint32_t MovingIntervalRateStat::getIntervalForTimeMs(uint64_t time_ms) {
-  return ((time_ms - calculation_start_ms_)/interval_size_ms_) % intervals_in_window_;
-}
-
-uint32_t MovingIntervalRateStat::getNextInterval(uint32_t interval) {
-  return (interval + 1) % intervals_in_window_;
-}
-
 void MovingIntervalRateStat::updateWindowTimes() {
   current_window_end_ms_ = calculation_start_ms_ + accumulated_intervals_ * interval_size_ms_;
   current_window_start_ms_ = calculation_start_ms_ +

@@ -7,11 +7,6 @@ namespace erizo {
 
 constexpr int kMaxPacketSize = 1500;
 
-bool RtpUtils::sequenceNumberLessThan(uint16_t first, uint16_t last) {
-  uint16_t result = first - last;
-  return result > 0xF000;
-}
-
 void RtpUtils::updateREMB(RtcpHeader *chead, uint bitrate) {
   if (chead->packettype == RTCP_PS_Feedback_PT && chead->getBlockCount() == RTCP_AFB) {
     char *uniqueId = reinterpret_cast<char*>(&chead->report.rembPacket.uniqueid);

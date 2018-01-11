@@ -13,7 +13,7 @@ namespace erizo {
 
 class RtpUtils {
  public:
-  static bool sequenceNumberLessThan(uint16_t first, uint16_t second);
+  inline static bool sequenceNumberLessThan(uint16_t first, uint16_t second);
 
   static void forEachRRBlock(std::shared_ptr<DataPacket> packet, std::function<void(RtcpHeader*)> f);
 
@@ -33,6 +33,11 @@ class RtpUtils {
 
   static std::shared_ptr<DataPacket> makePaddingPacket(std::shared_ptr<DataPacket> packet, uint8_t padding_size);
 };
+
+bool RtpUtils::sequenceNumberLessThan(uint16_t first, uint16_t last) {
+  uint16_t result = first - last;
+  return result > 0xF000;
+}
 
 }  // namespace erizo
 

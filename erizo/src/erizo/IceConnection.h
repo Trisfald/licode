@@ -106,7 +106,7 @@ class IceConnection : public LogContext {
   virtual void close() = 0;
 
   virtual void updateIceState(IceState state);
-  virtual IceState checkIceState();
+  IceState checkIceState() { return ice_state_; }
   virtual void setIceListener(std::weak_ptr<IceConnectionListener> listener);
   virtual std::weak_ptr<IceConnectionListener> getIceListener();
 

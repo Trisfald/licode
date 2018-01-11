@@ -136,8 +136,8 @@ class MovingIntervalRateStat : public StatNode {
  private:
   void add(uint64_t value);
   uint64_t calculateRateForInterval(uint64_t interval_to_calculate_ms);
-  uint32_t getIntervalForTimeMs(uint64_t time_ms);
-  uint32_t getNextInterval(uint32_t interval);
+  inline uint32_t getIntervalForTimeMs(uint64_t time_ms);
+  inline uint32_t getNextInterval(uint32_t interval);
   void updateWindowTimes();
 
  private:
@@ -179,6 +179,14 @@ class MovingAverageStat : public StatNode {
   uint64_t next_sample_position_;
   double current_average_;
 };
+
+uint32_t MovingIntervalRateStat::getNextInterval(uint32_t interval) {
+  return (interval + 1) % intervals_in_window_;
+}
+
+uint32_t MovingIntervalRateStat::getIntervalForTimeMs(uint64_t time_ms) {
+  return ((time_ms - calculation_start_ms_)/interval_size_ms_) % intervals_in_window_;
+}
 
 }  // namespace erizo
 
